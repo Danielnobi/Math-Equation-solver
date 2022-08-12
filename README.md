@@ -43,6 +43,8 @@ Now run the program to get the final output.
 ## Main.ipynb
 
 This file contains the main program of our equation solver including the trained model  
+## Model.ipynb
+This file contains the definition of the model, training of the model and testing of the model.
 ## Team Members
 
 [Aryan Kulkarni](https://github.com/AryanGKulkarni)
@@ -65,5 +67,3 @@ This file contains the main program of our equation solver including the trained
 [Priyansh Jaseja](https://github.com/iDroppiN)
 
 [Snehit Chinta](https://github.com/snehithchinta)
-## Model.ipynb
-This file contains the definition of the model, training of the model and testing of the model.
