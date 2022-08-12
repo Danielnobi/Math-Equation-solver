@@ -1,5 +1,5 @@
 
-MATH EQUATION SOLVER
+## MATH EQUATION SOLVER
 
 This project is a simple machine learning model which recognizes 
 handwritten equations from an image and solve it.
