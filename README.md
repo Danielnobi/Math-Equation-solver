@@ -4,7 +4,7 @@
 This project is a simple machine learning model which recognizes 
 handwritten equations from an image and solve it.
 
-We are given the problem to make a program to recognize a handwritten equation solver using Machine Learning. We have made a model which can recognize a handwritten equation from an image and then solve it. What kind of equation? Our model can recognize and solve basic and not-so-basic numerical expressions like 2+4 and e5 + 7, equations of one variable up to degree 2. This model works on the CNN architecture and has been made using various python libraries like TensorFlow, sympy, OpenCV etc
+We have made a program to recognize a handwritten equation solver using Machine Learning. We have made a model which can recognize a handwritten equation from an image and then solve it. What kind of equation? Our model can recognize and solve basic and not-so-basic numerical expressions like 2+4 and e5 + 7, equations of one variable up to degree 2. This model works on the CNN architecture and has been made using various python libraries like TensorFlow, sympy, OpenCV etc
 
 
 
