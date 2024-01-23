@@ -7,12 +7,12 @@ import cv2
 import numpy as np
 
 # Assuming model is already loaded
-model = tf.keras.models.load_model('./Model Files/Xception.h5')
+model = tf.keras.models.load_model('./model_files/vgg16.h5')
 
 def preprocess_image(img):
-    img = cv2.resize(img, (71,71))
+    img = cv2.resize(img, (32,32))
     img = cv2.threshold(img, 127, 255, cv2.THRESH_BINARY)[1]
-    img = img.reshape(1, 71,71, 1)
+    img = img.reshape(1, 32,32, 1)
     return img
 
 def predict_symbol(img):

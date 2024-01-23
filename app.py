@@ -73,18 +73,19 @@ st.title("Math Equation Solver")
 
 # Load the model from the file
 print("starting")
-model = model = tf.keras.models.load_model(r"C:\Users\aryan\OneDrive\Desktop\Work\Math Equation Solver\model\modelX.h5")
+model = model = tf.keras.models.load_model(f'model_files/modelX.h5')
 print("done")
 
 img2 = st.file_uploader("Upload an image", type=["png", "jpg", "jpeg"])
-file_bytes = img2.getvalue()
-nparr = np.frombuffer(file_bytes, np.uint8)
 
-# Read the image using cv2.imdecode()
-img = cv2.imdecode(nparr, cv2.IMREAD_GRAYSCALE)
-plt.imshow(img)
+if img2 is not None:
+    file_bytes = img2.getvalue()
+    nparr = np.frombuffer(file_bytes, np.uint8)
 
-if img is not None:
+    # Read the image using cv2.imdecode()
+    img = cv2.imdecode(nparr, cv2.IMREAD_GRAYSCALE)
+    plt.imshow(img)
+
     img=~img
     _,thresh=cv2.threshold(img,127,255,cv2.THRESH_BINARY)
     ctrs,_=cv2.findContours(thresh,cv2.RETR_EXTERNAL,cv2.CHAIN_APPROX_NONE)
@@ -130,134 +131,137 @@ if img is not None:
         im_resize = cv2.resize(im_crop,(28,28))
         im_resize=np.reshape(im_resize,(28,28,1))
         train_data.append(im_resize)
-
-for digit in train_data:
-    prediction = model.predict(digit.reshape(1, 28, 28, 1))  
-    
-    #print ("\n\n---------------------------------------\n\n")
-    #print ("=========PREDICTION============ \n\n")
-    #plt.imshow(digit.reshape(28, 28), cmap="gray")
-    #plt.show()
-    #print("\n\nFinal Output: {}".format(np.argmax(prediction)))
-    
-    #print ("\nPrediction (Softmax) from the neural network:\n\n {}".format(prediction))
-    
-    hard_maxed_prediction = np.zeros(prediction.shape)
-    hard_maxed_prediction[0][np.argmax(prediction)] = 1
-    #print ("\n\nHard-maxed form of the prediction: \n\n {}".format(hard_maxed_prediction))
-    #print ("\n\n---------------------------------------\n\n")
-
-equation=''
-
-for i in range(len(train_data)):
-    
-    train_data[i]=np.array(train_data[i])
-    train_data[i]=train_data[i].reshape(1,28,28,1)
-    result=np.argmax(model.predict(train_data[i]), axis=-1)
         
-    for j in range(10) :
-        if result[0] == j :
-            equation = equation + str(j)
-    
-    if result[0] == 10 :
-        equation = equation + "+"
-    if result[0] == 11 :
-        equation = equation + "-"
-    if result[0] == 12 :
-        equation = equation + "*"
-    if result[0] == 13 :
-        equation = equation + "/"
-    if result[0] == 14 :
-        equation = equation + "="
-    if result[0] == 15 :
-        equation = equation + "."
-    if result[0] == 16 :
-        equation = equation + "x"
-    if result[0] == 17 :
-        equation = equation + "y"      
-    if result[0] == 18 :
-        equation = equation + "z"
 
-    s=equation
-t=""
-i=0
-while i<len(s):
-    if s[i]=="-" and s[i+1]=="-":
-        t=t+"="
-        i=i+2
-    else: 
-        t=t+s[i]
-        i=i+1
+    for digit in train_data:
+        prediction = model.predict(digit.reshape(1, 28, 28, 1))  
+        
+        #print ("\n\n---------------------------------------\n\n")
+        #print ("=========PREDICTION============ \n\n")
+        #plt.imshow(digit.reshape(28, 28), cmap="gray")
+        #plt.show()
+        #print("\n\nFinal Output: {}".format(np.argmax(prediction)))
+        
+        #print ("\nPrediction (Softmax) from the neural network:\n\n {}".format(prediction))
+        
+        hard_maxed_prediction = np.zeros(prediction.shape)
+        hard_maxed_prediction[0][np.argmax(prediction)] = 1
+        #print ("\n\nHard-maxed form of the prediction: \n\n {}".format(hard_maxed_prediction))
+        #print ("\n\n---------------------------------------\n\n")
 
-equation=t
-    
-#print("Your Equation :", equation)
-import sympy as sp
-def lsttostr(lst):
-    str = ""
-    for i in lst:
-        str += i
-    return str
+    equation=''
 
-equation = list(equation)
-temp2 = 0
-for i in equation:
-    if i == '=':
-        equation[temp2] = '-('
-        equation += ')'
-    temp2 += 1
-equation = lsttostr(equation)
+    for i in range(len(train_data)):
+        
+        train_data[i]=np.array(train_data[i])
+        train_data[i]=train_data[i].reshape(1,28,28,1)
+        result=np.argmax(model.predict(train_data[i]), axis=-1)
+            
+        for j in range(10) :
+            if result[0] == j :
+                equation = equation + str(j)
+        
+        if result[0] == 10 :
+            equation = equation + "+"
+        if result[0] == 11 :
+            equation = equation + "-"
+        if result[0] == 12 :
+            equation = equation + "*"
+        if result[0] == 13 :
+            equation = equation + "/"
+        if result[0] == 14 :
+            equation = equation + "="
+        if result[0] == 15 :
+            equation = equation + "."
+        if result[0] == 16 :
+            equation = equation + "x"
+        if result[0] == 17 :
+            equation = equation + "y"      
+        if result[0] == 18 :
+            equation = equation + "z"
 
-alpha = 'abcdefghijklmnopqrstuvwxyz'
-#equation = list(equation)
-
-temp = 0
-
-for i in equation:
-    if i in alpha:
-        var = i
-        #equation[equation.index(i)] = 'a'
-        temp = 1
-#equation = lsttostr(equation)
-#print(equation)
-
-x = sp.symbols(var)
-#eq_raw = eval(equation)
-#print(eq_raw)
-print("Your Equation:")      
-st.write("Your Equation: ", equation)
-if temp != 0:
-    s=equation
+        s=equation
     t=""
     i=0
     while i<len(s):
-        if (s[i] in '123456789') and (s[i+1]==var):
-            t=t+s[i]+"*"+s[i+1]
-            i=i+2        
-        else: 
-            t=t+s[i]
-            i=i+1
-    equation=t
-    s=equation
-    t=""
-    i=0
-    while i<len(s):       
-        if (s[i]==var) and (s[i+1] in '123456789'):
-            t=t+s[i]+"**"+s[i+1]
+        if s[i]=="-" and s[i+1]=="-":
+            t=t+"="
             i=i+2
         else: 
             t=t+s[i]
-            i=i+1       
+            i=i+1
 
-    equation=t    
-    eq_raw = eval(equation)    
-    print(equation)
-    eq = sp.Eq(eq_raw, 0)
-    print("Solution:", sp.solve(eq_raw, x))
-    st.write("Solution: ", sp.solve(eq_raw, x))
-    #display(sp.solve(eq_raw, x))
-else:    
-    eq_raw = eval(equation)
-    print(equation)
-    print("Solution:", eq_raw)
-    st.write("Solution: ", eq_raw)
+    equation=t
+        
+    #print("Your Equation :", equation)
+    import sympy as sp
+    def lsttostr(lst):
+        str = ""
+        for i in lst:
+            str += i
+        return str
+
+    equation = list(equation)
+    temp2 = 0
+    for i in equation:
+        if i == '=':
+            equation[temp2] = '-('
+            equation += ')'
+        temp2 += 1
+    equation = lsttostr(equation)
+
+    alpha = 'abcdefghijklmnopqrstuvwxyz'
+    #equation = list(equation)
+
+    temp = 0
+
+    for i in equation:
+        if i in alpha:
+            var = i
+            #equation[equation.index(i)] = 'a'
+            temp = 1
+    #equation = lsttostr(equation)
+    #print(equation)
+
+    x = sp.symbols(var)
+    #eq_raw = eval(equation)
+    #print(eq_raw)
+    print("Your Equation:")      
+    st.write("Your Equation: ", equation)
+    if temp != 0:
+        s=equation
+        t=""
+        i=0
+        while i<len(s):
+            if (s[i] in '123456789') and (s[i+1]==var):
+                t=t+s[i]+"*"+s[i+1]
+                i=i+2        
+            else: 
+                t=t+s[i]
+                i=i+1
+        equation=t
+        s=equation
+        t=""
+        i=0
+        while i<len(s):       
+            if (s[i]==var) and (s[i+1] in '123456789'):
+                t=t+s[i]+"**"+s[i+1]
+                i=i+2
+            else: 
+                t=t+s[i]
+                i=i+1       
+
+        equation=t    
+        eq_raw = eval(equation)    
+        print(equation)
+        eq = sp.Eq(eq_raw, 0)
+        print("Solution:", sp.solve(eq_raw, x))
+        st.write("Solution: ", sp.solve(eq_raw, x))
+        #display(sp.solve(eq_raw, x))
+    else:    
+        eq_raw = eval(equation)
+        print(equation)
+        print("Solution:", eq_raw)
+        st.write("Solution: ", eq_raw)
+else:
+    st.write("Please upload an image")

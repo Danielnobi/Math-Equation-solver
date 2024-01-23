@@ -118,10 +118,15 @@ val_ds = val_ds.map(lambda x, y: (tf.image.resize(x, (img_height, img_width)), t
 
 resnet_model = Sequential()
 
-pretrained_model= tf.keras.applications.ResNet50(include_top=False,
-                   input_shape=(32,32,3),
-                   pooling='avg',classes=19,
-                   weights='imagenet')
+pretrained_model= keras.applications.InceptionV3(
+    include_top=False,
+    weights="imagenet",
+    input_tensor=None,
+    input_shape=(71,71,3),
+    pooling=None,
+    classes=19,
+    classifier_activation="softmax",
+)
 for layer in pretrained_model.layers:
         layer.trainable=False
 
@@ -134,4 +139,4 @@ resnet_model.compile(optimizer=Adam(lr=0.002),loss='categorical_crossentropy',me
 
 resnet_model.fit(train_ds, validation_data=val_ds, epochs=20)
 
-tf.keras.models.save_model(resnet_model, f'./model_files/vgg16.h5', save_format='h5')
+tf.keras.models.save_model(resnet_model, f'./model_files/InceptionV3.h5', save_format='h5')
