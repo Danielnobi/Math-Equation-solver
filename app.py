@@ -70,6 +70,21 @@ from torch.nn import DataParallel
 from torch.nn.parallel import DistributedDataParallel
 from keras.models import model_from_json
 
+github_link = "https://github.com/AryanGKulkarni/Math-Equation-solver"
+
+# SVG code for the GitHub icon
+github_svg = """
+<svg xmlns="http://www.w3.org/2000/svg" height="30" width="30" viewBox="0 0 16 16" fill="currentColor">
+    <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/>
+</svg>
+"""
+
+# HTML code to display GitHub icon with hyperlink
+github_html = f'<a href="{github_link}" target="_blank">{github_svg}</a>'
+
+# Display the GitHub icon and hyperlink
+st.markdown(github_html, unsafe_allow_html=True)
+
 st.title("Math Equation Solver")
 
 # Load the model from the file
@@ -79,19 +94,31 @@ loaded_model_json = json_file.read()
 json_file.close()
 model = model_from_json(loaded_model_json)
 # load weights into new model
-model.load_weights(f"model_files/model_final2.h5")
+model.load_weights(f"model_files/model_final.h5")
 print("done")
 
+img1='images/rada.png'
+ww=0
 img2 = st.file_uploader("Upload an image", type=["png", "jpg", "jpeg"])
+if img2 is None:
+    st.write("Sample Image")
+    ww=1
+    img2=img1
+
 
 if img2 is not None:
-    st.image(img2, caption='Your Image', use_column_width=True)
-    file_bytes = img2.getvalue()
-    nparr = np.frombuffer(file_bytes, np.uint8)
+    if ww==0:
+        st.image(img2, caption='Your Image', use_column_width=True)
+        file_bytes = img2.getvalue()
+        nparr = np.frombuffer(file_bytes, np.uint8)
 
-    # Read the image using cv2.imdecode()
-    img = cv2.imdecode(nparr, cv2.IMREAD_GRAYSCALE)
-    plt.imshow(img)
+        # Read the image using cv2.imdecode()
+        img = cv2.imdecode(nparr, cv2.IMREAD_GRAYSCALE)
+        plt.imshow(img)
+    else:
+        st.image(img2, caption='Your Image', use_column_width=True)
+        img=cv2.imread(img2,cv2.IMREAD_GRAYSCALE)
+
 
     img=~img
     _,thresh=cv2.threshold(img,127,255,cv2.THRESH_BINARY)
@@ -188,6 +215,7 @@ if img2 is not None:
             equation = equation + "z"
 
         s=equation
+    print("Your Equation:", equation)
     t=""
     i=0
     while i<len(s):

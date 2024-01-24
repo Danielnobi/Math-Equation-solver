@@ -50,17 +50,17 @@ model.add(MaxPooling2D(pool_size=(2, 2)))
 model.add(Dropout(0.2))
 model.add(Flatten())
 model.add(Dense(128, activation='relu'))
-model.add(Dense(50, activation='relu'))
+model.add(Dense(100, activation='relu'))
 model.add(Dense(19, activation='softmax'))
 # Compile model
 model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
 
 from keras.models import model_from_json
 
-model.fit(np.array(l), cat, epochs=10, batch_size=200,shuffle=True,verbose=1)
+model.fit(np.array(l), cat, epochs=15, batch_size=200,shuffle=True,verbose=1)
 
 model_json = model.to_json()
 with open("model_final.json", "w") as json_file:
     json_file.write(model_json)
 # serialize weights to HDF5
-model.save_weights("model_files/model_final2.h5")
+model.save_weights("model_files/model_final.h5")
