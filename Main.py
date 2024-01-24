@@ -70,10 +70,10 @@ from torch.nn.parallel import DistributedDataParallel
 
 # Load the model from the file
 print("starting")
-model = model = tf.keras.models.load_model(r"C:\Users\aryan\OneDrive\Desktop\Work\Math Equation Solver\model\modelX.h5")
+model = model = tf.keras.models.load_model(f'model_files/modelX.h5')
 print("done")
 
-img = cv2.imread(r"C:\Users\aryan\OneDrive\Desktop\Work\IITI-SOC\0\rada.png",cv2.IMREAD_GRAYSCALE)     #image path goes here
+img = cv2.imread(f'images/cubic.png',cv2.IMREAD_GRAYSCALE)     #image path goes here
 plt.imshow(img)
 
 if img is not None:
@@ -204,7 +204,7 @@ alpha = 'abcdefghijklmnopqrstuvwxyz'
 #equation = list(equation)
 
 temp = 0
-
+var='x'
 for i in equation:
     if i in alpha:
         var = i

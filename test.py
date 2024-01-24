@@ -7,12 +7,12 @@ import cv2
 import numpy as np
 
 # Assuming model is already loaded
-model = tf.keras.models.load_model('./model_files/vgg16.h5')
+model = tf.keras.models.load_model('./model_files/modelX.h5')
 
 def preprocess_image(img):
-    img = cv2.resize(img, (32,32))
+    img = cv2.resize(img, (28,28))
     img = cv2.threshold(img, 127, 255, cv2.THRESH_BINARY)[1]
-    img = img.reshape(1, 32,32, 1)
+    img = img.reshape(1, 28,28, 1)
     return img
 
 def predict_symbol(img):
@@ -44,7 +44,7 @@ def predict_symbol(img):
         return "z"
 
 def process_image(img_path):
-    img = cv2.imread(f'./images/5.png', cv2.IMREAD_GRAYSCALE)
+    img = cv2.imread(f'./images/6.png', cv2.IMREAD_GRAYSCALE)
     img = ~img  # Invert the image
 
     _, thresh = cv2.threshold(img, 127, 255, cv2.THRESH_BINARY)

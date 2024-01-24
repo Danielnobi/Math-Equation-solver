@@ -105,7 +105,7 @@ val_ds = tf.keras.preprocessing.image_dataset_from_directory(
 
 # class_names = train_ds.class_names
 # print(class_names)
-img_height, img_width = 32, 32
+img_height, img_width = 75,75
 
 # # Resize images in train_ds
 from keras.utils import to_categorical
@@ -122,7 +122,7 @@ pretrained_model= keras.applications.InceptionV3(
     include_top=False,
     weights="imagenet",
     input_tensor=None,
-    input_shape=(71,71,3),
+    input_shape=(75,75,3),
     pooling=None,
     classes=19,
     classifier_activation="softmax",
@@ -132,7 +132,7 @@ for layer in pretrained_model.layers:
 
 resnet_model.add(pretrained_model)
 resnet_model.add(Flatten())
-resnet_model.add(Dense(512, activation='relu'))
+resnet_model.add(Dense(256, activation='relu'))
 resnet_model.add(Dense(19, activation='softmax'))
 
 resnet_model.compile(optimizer=Adam(lr=0.002),loss='categorical_crossentropy',metrics=['accuracy'])

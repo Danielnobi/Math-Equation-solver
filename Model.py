@@ -60,7 +60,7 @@ warnings.filterwarnings('ignore')
 
 sns.set()
 
-data = pd.read_csv(r"C:\Users\aryan\OneDrive\Desktop\Work\IITI-SOC\train_handwritten.csv",index_col=False)
+data = pd.read_csv(f'train_hanwritten.csv',index_col=False)
 labels = data[['label']]
 
 data.drop(data.columns[[784]],axis=1,inplace=True)
@@ -119,5 +119,5 @@ import joblib
 # Save the model using joblib
 # model = 
 print("starting")
-tf.keras.models.save_model(model, r"C:\Users\aryan\OneDrive\Desktop\Work\Math Equation Solver\model\modelX.h5", save_format='h5')
+tf.keras.models.save_model(model, f'model_files/custom.h5', save_format='h5')
 print("done")

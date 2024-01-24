@@ -105,7 +105,7 @@ val_ds = tf.keras.preprocessing.image_dataset_from_directory(
 
 # class_names = train_ds.class_names
 # print(class_names)
-img_height, img_width = 32, 32
+img_height, img_width = 155,137
 
 # # Resize images in train_ds
 from keras.utils import to_categorical
@@ -119,7 +119,7 @@ val_ds = val_ds.map(lambda x, y: (tf.image.resize(x, (img_height, img_width)), t
 resnet_model = Sequential()
 
 pretrained_model= tf.keras.applications.ResNet50(include_top=False,
-                   input_shape=(32,32,3),
+                   input_shape=(155,137,3),
                    pooling='avg',classes=19,
                    weights='imagenet')
 for layer in pretrained_model.layers:
@@ -132,6 +132,6 @@ resnet_model.add(Dense(19, activation='softmax'))
 
 resnet_model.compile(optimizer=Adam(lr=0.002),loss='categorical_crossentropy',metrics=['accuracy'])
 
-resnet_model.fit(train_ds, validation_data=val_ds, epochs=20)
+resnet_model.fit(train_ds, validation_data=val_ds, epochs=10)
 
 tf.keras.models.save_model(resnet_model, f'./model_files/vgg16.h5', save_format='h5')
