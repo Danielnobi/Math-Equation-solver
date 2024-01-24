@@ -6,9 +6,6 @@ import pandas as pd
 # from matplotlib import pyplot as plt
 # import matplotlib.image as mpimg
 # %matplotlib inline
-import os
-from os import listdir
-from os.path import isfile, join
 import streamlit as st
 
 # CV and Image
@@ -34,17 +31,11 @@ print("Done")
 import numpy as np 
 import pandas as pd 
 # import matplotlib.pyplot as plt
-import seaborn as sns
-import os
 import cv2
 # from google.colab.patches import cv2_imshowh
 from keras import backend as K
 
-#ignore warning messages 
-import warnings
-warnings.filterwarnings('ignore') 
-
-sns.set()
+# sns.set()
 from keras.models import model_from_json
 
 github_link = "https://github.com/AryanGKulkarni/Math-Equation-solver"
