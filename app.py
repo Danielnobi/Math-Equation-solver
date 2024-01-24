@@ -16,14 +16,6 @@ import keras
 from keras import optimizers
 from keras import backend as K
 from keras.models import Model, Sequential, load_model
-from keras.layers import *
-from keras.layers import Input, Dense, Dropout, Flatten
-from keras.utils import np_utils
-from keras.layers.convolutional import Conv2D, MaxPooling2D
-from keras.utils.np_utils import to_categorical
-from keras.utils.vis_utils import plot_model
-from keras.callbacks import ModelCheckpoint
-from keras.optimizers import Adam
 K.image_data_format()
 
 print("Done")
