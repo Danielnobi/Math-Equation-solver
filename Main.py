@@ -67,13 +67,19 @@ from sklearn.tree import BaseDecisionTree
 import torch
 from torch.nn import DataParallel
 from torch.nn.parallel import DistributedDataParallel
+from keras.models import model_from_json
 
 # Load the model from the file
 print("starting")
-model = model = tf.keras.models.load_model(f'model_files/modelX.h5')
+json_file = open('model_final.json', 'r')
+loaded_model_json = json_file.read()
+json_file.close()
+model = model_from_json(loaded_model_json)
+# load weights into new model
+model.load_weights(f"model_files/model_final2.h5")
 print("done")
 
-img = cv2.imread(f'images/cubic.png',cv2.IMREAD_GRAYSCALE)     #image path goes here
+img = cv2.imread(f'images/rada.png',cv2.IMREAD_GRAYSCALE)     #image path goes here
 plt.imshow(img)
 
 if img is not None:
@@ -124,7 +130,9 @@ if img is not None:
         train_data.append(im_resize)
 
 for digit in train_data:
-    prediction = model.predict(digit.reshape(1, 28, 28, 1))  
+    digit = np.array(digit)    
+    digit = digit.reshape(1,28,28,1)    
+    prediction = model.predict(digit)  
     
     #print ("\n\n---------------------------------------\n\n")
     #print ("=========PREDICTION============ \n\n")
@@ -177,13 +185,16 @@ while i<len(s):
     if s[i]=="-" and s[i+1]=="-":
         t=t+"="
         i=i+2
+    elif s[i]=="=" and s[i+1]=="=":
+        t=t+"="
+        i=i+2
     else: 
         t=t+s[i]
         i=i+1
 
 equation=t
     
-#print("Your Equation :", equation)
+print("Your Equation :", equation)
 import sympy as sp
 def lsttostr(lst):
     str = ""
