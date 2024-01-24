@@ -68,17 +68,24 @@ from sklearn.tree import BaseDecisionTree
 import torch
 from torch.nn import DataParallel
 from torch.nn.parallel import DistributedDataParallel
+from keras.models import model_from_json
 
 st.title("Math Equation Solver")
 
 # Load the model from the file
 print("starting")
-model = model = tf.keras.models.load_model(f'model_files/modelX.h5')
+json_file = open('model_final.json', 'r')
+loaded_model_json = json_file.read()
+json_file.close()
+model = model_from_json(loaded_model_json)
+# load weights into new model
+model.load_weights(f"model_files/model_final2.h5")
 print("done")
 
 img2 = st.file_uploader("Upload an image", type=["png", "jpg", "jpeg"])
 
 if img2 is not None:
+    st.image(img2, caption='Your Image', use_column_width=True)
     file_bytes = img2.getvalue()
     nparr = np.frombuffer(file_bytes, np.uint8)
 
@@ -187,6 +194,9 @@ if img2 is not None:
         if s[i]=="-" and s[i+1]=="-":
             t=t+"="
             i=i+2
+        elif s[i]=="=" and s[i+1]=="=":
+            t=t+"="
+            i=i+2
         else: 
             t=t+s[i]
             i=i+1
@@ -226,20 +236,7 @@ if img2 is not None:
     x = sp.symbols(var)
     #eq_raw = eval(equation)
     #print(eq_raw)
-    print("Your Equation:")      
-    st.write("Your Equation: ", equation)
     if temp != 0:
-        s=equation
-        t=""
-        i=0
-        while i<len(s):
-            if (s[i] in '123456789') and (s[i+1]==var):
-                t=t+s[i]+"*"+s[i+1]
-                i=i+2        
-            else: 
-                t=t+s[i]
-                i=i+1
-        equation=t
         s=equation
         t=""
         i=0
@@ -250,6 +247,19 @@ if img2 is not None:
             else: 
                 t=t+s[i]
                 i=i+1       
+        equation=t    
+        print("Your Equation:", equation)
+        st.write("Your Equation: ", equation)
+        s=equation
+        t=""
+        i=0
+        while i<len(s):
+            if (s[i] in '123456789') and (s[i+1]==var):
+                t=t+s[i]+"*"+s[i+1]
+                i=i+2        
+            else: 
+                t=t+s[i]
+                i=i+1
 
         equation=t    
         eq_raw = eval(equation)    
