@@ -4,7 +4,7 @@ print("Loading...")
 import numpy as np
 import pandas as pd
 # from matplotlib import pyplot as plt
-import matplotlib.image as mpimg
+# import matplotlib.image as mpimg
 # %matplotlib inline
 import os
 from os import listdir
@@ -13,10 +13,6 @@ import streamlit as st
 
 # CV and Image
 import cv2
-from PIL import Image
-
-# pickle
-import pickle
 
 # keras
 import keras
@@ -37,37 +33,18 @@ print("Done")
 
 import numpy as np 
 import pandas as pd 
-import matplotlib.pyplot as plt
+# import matplotlib.pyplot as plt
 import seaborn as sns
 import os
 import cv2
 # from google.colab.patches import cv2_imshowh
-from sklearn.preprocessing import MinMaxScaler
-import tensorflow as tf
-from keras.models import Sequential
-from keras.layers import Dense
-from keras.layers import Dropout
-from keras.layers import Flatten
-from keras.layers.convolutional import Conv2D
-from keras.layers.convolutional import MaxPooling2D
 from keras import backend as K
-from keras.utils import np_utils
-from sklearn.model_selection import train_test_split
-from sklearn.metrics import confusion_matrix
 
 #ignore warning messages 
 import warnings
 warnings.filterwarnings('ignore') 
 
 sns.set()
-
-import joblib
-from joblib import Parallel, delayed
-from sklearn.tree import BaseDecisionTree
-
-import torch
-from torch.nn import DataParallel
-from torch.nn.parallel import DistributedDataParallel
 from keras.models import model_from_json
 
 github_link = "https://github.com/AryanGKulkarni/Math-Equation-solver"
