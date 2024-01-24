@@ -3,7 +3,7 @@ print("Loading...")
 # common libraries
 import numpy as np
 import pandas as pd
-from matplotlib import pyplot as plt
+# from matplotlib import pyplot as plt
 import matplotlib.image as mpimg
 # %matplotlib inline
 import os
@@ -114,7 +114,7 @@ if img2 is not None:
 
         # Read the image using cv2.imdecode()
         img = cv2.imdecode(nparr, cv2.IMREAD_GRAYSCALE)
-        plt.imshow(img)
+        # plt.imshow(img)
     else:
         st.image(img2, caption='Your Image', use_column_width=True)
         img=cv2.imread(img2,cv2.IMREAD_GRAYSCALE)
