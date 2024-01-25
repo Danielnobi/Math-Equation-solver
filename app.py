@@ -54,7 +54,7 @@ loaded_model_json = json_file.read()
 json_file.close()
 model = model_from_json(loaded_model_json)
 # load weights into new model
-model.load_weights(f"model_files/model_final.h5")
+model.load_weights(f"model_final.h5")
 print("done")
 
 img1='images/rada.png'
