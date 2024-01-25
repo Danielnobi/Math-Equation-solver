@@ -57,7 +57,7 @@ model = model_from_json(loaded_model_json)
 model.load_weights(f"model_final.h5")
 print("done")
 
-img1='images/rada.png'
+img1='rada.png'
 ww=0
 img2 = st.file_uploader("Upload an image", type=["png", "jpg", "jpeg"])
 if img2 is None:
